@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "BlackHole.generated.h"
 
+
+class USphereComponent;
+
 UCLASS()
 class FPSGAME_API ABlackHole : public AActor
 {
@@ -16,8 +19,24 @@ public:
 	ABlackHole();
 
 protected:
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		UStaticMeshComponent* MeshComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		USphereComponent* SphereDeleterComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		USphereComponent* SphereActiveComp;
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+		void OverlapDeleterSphere(UPrimitiveComponent* OverlappedComponent, 
+			AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
+			bool bFromSweep, const FHitResult& SweepResult);
+
 
 public:	
 	// Called every frame
