@@ -28,6 +28,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UDecalComponent* DecalComp;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	USoundBase* ObjectiveMissingSound;
+
 public:	
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;

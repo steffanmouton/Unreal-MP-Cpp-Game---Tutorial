@@ -32,15 +32,25 @@ void AFPSExtractionZone::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorBeginOverlap(OtherActor);
 	UE_LOG(LogTemp, Log, TEXT("Overlapped with extraction zone!"));
-	UGameplayStatics::SpawnEmitterAtLocation(this, EnterFX, GetActorLocation());
-
+	
 	AFPSCharacter* MyPawn = Cast<AFPSCharacter>(OtherActor);
-	if (MyPawn && MyPawn->bIsCarryingObjective)
+
+	if (MyPawn == nullptr)
+	{
+		return;
+	}
+
+	if (MyPawn->bIsCarryingObjective)
 	{
 		AFPSGameMode* GM = Cast<AFPSGameMode>(GetWorld()->GetAuthGameMode());
 		if (GM)
 		{
 			GM->CompleteMission(MyPawn);
 		}
+	}
+	else
+	{
+		UGameplayStatics::PlaySound2D(this, ObjectiveMissingSound);
+		UGameplayStatics::SpawnEmitterAtLocation(this, EnterFX, GetActorLocation());
 	}
 }
