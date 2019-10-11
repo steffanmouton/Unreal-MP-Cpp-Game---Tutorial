@@ -47,6 +47,7 @@ void AFPSAIGuard::OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, 
 	Direction.Normalize();
 	
 	FRotator NewLookAt = FRotationMatrix::MakeFromX(Direction).Rotator();
+	
 
 	SetActorRotation(NewLookAt);
 }
