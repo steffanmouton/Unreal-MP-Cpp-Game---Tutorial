@@ -29,6 +29,7 @@ AFPSProjectile::AFPSProjectile()
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
+
 }
 
 
@@ -40,6 +41,21 @@ void AFPSProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
 	}
 
-	MakeNoise(1.0f, Instigator);
-	Destroy();
+	// AI Logic only runs on the Server, only creates noise and destroys the object if calling actor is the server/host.
+	// Clients don't make decisions. They execute what server tells them.
+	if (Role == ROLE_Authority) 
+	{
+		MakeNoise(1.0f, Instigator);
+		Destroy();
+	}
+	
+	
+}
+
+void AFPSProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetReplicates(true);
+	SetReplicateMovement(true);
 }
