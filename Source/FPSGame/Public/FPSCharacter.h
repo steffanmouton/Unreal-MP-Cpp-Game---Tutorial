@@ -55,6 +55,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Gameplay")
 	bool bIsCarryingObjective;
 
+	virtual void Tick(float DeltaSeconds) override;
+
 protected:
 	
 	/** Fires a projectile. */

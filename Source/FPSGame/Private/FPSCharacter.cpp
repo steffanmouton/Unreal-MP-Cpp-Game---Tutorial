@@ -49,6 +49,19 @@ void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 }
 
 
+void AFPSCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (!IsLocallyControlled())
+	{
+		FRotator NewRot = CameraComponent->RelativeRotation;
+		NewRot.Pitch = RemoteViewPitch * 360.0f / 255.0f;
+		CameraComponent->SetRelativeRotation(NewRot);
+	}
+	
+}
+
 void AFPSCharacter::Fire()
 {
 	// Request that the server/host calls a the fire function, with validation. If firing player IS server/host, is validated. No need for manual check.
